@@ -1,0 +1,60 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Kalam:wght@700&family=Patrick+Hand&display=swap');
+
+@theme {
+  --font-kalam: "Kalam", cursive;
+  --font-patrick: "Patrick Hand", cursive;
+  
+  --color-paper: #fdfbf7;
+  --color-pencil: #2d2d2d;
+  --color-marker: #ff4d4d;
+  --color-pen: #2d5da1;
+  --color-postit: #fff9c4;
+}
+
+@layer base {
+  body {
+    @apply bg-paper text-pencil font-patrick;
+    background-image: radial-gradient(#d1d1d1 1px, transparent 1px);
+    background-size: 20px 20px;
+  }
+}
+
+@layer components {
+  .wobbly-border {
+    border: 2px solid theme('colors.pencil');
+    border-radius: 255px 15px 225px 15px/15px 225px 15px 255px;
+  }
+  
+  .torn-paper {
+    background-color: theme('colors.paper');
+    box-shadow: 2px 3px 20px rgba(0,0,0,0.1);
+    position: relative;
+    clip-path: polygon(
+      0% 0%, 100% 0%, 100% 95%, 98% 97%, 95% 94%, 92% 98%, 88% 94%, 85% 97%, 80% 95%, 75% 98%, 70% 94%, 65% 97%, 60% 95%, 55% 98%, 50% 94%, 45% 97%, 40% 95%, 35% 98%, 30% 94%, 25% 97%, 20% 95%, 15% 98%, 10% 94%, 5% 97%, 0% 95%
+    );
+  }
+
+  .tape-strip {
+    @apply absolute -top-3 left-1/2 -translate-x-1/2 w-24 h-8 bg-white/40 backdrop-blur-sm rotate-1;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+
+  .thumbtack {
+    @apply absolute -top-2 left-1/2 -translate-x-1/2 w-4 h-4 rounded-full bg-marker shadow-md;
+    &::after {
+      content: '';
+      @apply absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-1 h-1 bg-white/50 rounded-full;
+    }
+  }
+}
+
+@keyframes wobbly-press {
+  0% { transform: scale(1); }
+  50% { transform: scale(0.95) rotate(-1deg); }
+  100% { transform: scale(1); }
+}
+
+.animate-wobbly-press:active {
+  animation: wobbly-press 0.2s ease-in-out;
+}
